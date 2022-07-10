@@ -5,4 +5,7 @@ metadata:
 spec:
   containers:
     - name: posts
-      image: microservices/posts:0.0.1
+      image: microservices/posts:0.0.5
+      # imagePullPolicy tells kubernetes not to try and pull this image on a remote repository
+      # but to run the one locally
+      imagePullPolicy: Never
