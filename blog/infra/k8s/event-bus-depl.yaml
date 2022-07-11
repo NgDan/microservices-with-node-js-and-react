@@ -1,35 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: posts-depl
+  name: event-bus-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: posts
+      app: event-bus
   template:
     metadata:
       # the "label" and "selector" fields in kubernetes work similar to
-      # how classNames work in css. We give this Deployment a label of app "posts"
+      # how classNames work in css. We give this Deployment a label of app "event-bus"
       # and then it can be targeted via that label using the selctor field from other
       # kubernetes objects (Load Balance service, or any other service, object etc)
       labels:
-        app: posts
+        app: event-bus
     spec:
       containers:
-        - name: posts
-          image: negrusadan95/microservices-posts
+        - name: event-bus
+          image: negrusadan95/microservices-event-bus
           # imagePullPolicy: Never
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-clusterip-srv
+  name: event-bus-srv
 spec:
   selector:
-    app: posts
+    app: event-bus
   ports:
-    - name: posts
+    - name: event-bus
       protocol: TCP
-      port: 4000
-      targetPort: 4000
+      port: 4005
+      targetPort: 4005
