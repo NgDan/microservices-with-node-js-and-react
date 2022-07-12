@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moderation-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moderation
+  template:
+    metadata:
+      # the "label" and "selector" fields in kubernetes work similar to
+      # how classNames work in css. We give this Deployment a label of app "moderation"
+      # and then it can be targeted via that label using the selctor field from other
+      # kubernetes objects (Load Balance service, or any other service, object etc)
+      labels:
+        app: moderation
+    spec:
+      containers:
+        - name: moderation
+          image: negrusadan95/microservices-moderation
+          # imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderation-srv
+spec:
+  selector:
+    app: moderation
+  ports:
+    - name: moderation
+      protocol: TCP
+      port: 4003
+      targetPort: 4003

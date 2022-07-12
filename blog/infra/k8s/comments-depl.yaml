@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comments-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comments
+  template:
+    metadata:
+      # the "label" and "selector" fields in kubernetes work similar to
+      # how classNames work in css. We give this Deployment a label of app "comments"
+      # and then it can be targeted via that label using the selctor field from other
+      # kubernetes objects (Load Balance service, or any other service, object etc)
+      labels:
+        app: comments
+    spec:
+      containers:
+        - name: comments
+          image: negrusadan95/microservices-comments
+          # imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: comments-srv
+spec:
+  selector:
+    app: comments
+  ports:
+    - name: comments
+      protocol: TCP
+      port: 4001
+      targetPort: 4001
