@@ -1,0 +1,64 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    # prevents skaffold from pushing images to dockerhub on each restart
+    push: false
+  artifacts:
+    - image: negrusadan95/microservices-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+        # this is sort of a "hot reload". If we change any file that is matched by
+        # the matcher, skaffold is going to replace that file directly into the running
+        # pod, without rebuilding the image. If the file doesn't match the matcher
+        # (for example if we change something in package.json) then skaffold
+        # will rebuild everything
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+    - image: negrusadan95/microservices-comments
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: negrusadan95/microservices-moderation
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: negrusadan95/microservices-query
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: negrusadan95/microservices-posts
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: negrusadan95/microservices-event-bus
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
