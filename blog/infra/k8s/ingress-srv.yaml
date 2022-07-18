@@ -31,7 +31,7 @@ spec:
                 name: comments-srv
                 port:
                   number: 4001
-          - path: /
+          - path: /?(.*)
             pathType: Prefix
             backend:
               service:

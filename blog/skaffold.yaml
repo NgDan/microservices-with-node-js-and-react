@@ -18,6 +18,14 @@ build:
         # pod, without rebuilding the image. If the file doesn't match the matcher
         # (for example if we change something in package.json) then skaffold
         # will rebuild everything
+        # This, combined with nodemon, which watchs over the files
+        # that skaffold loads into the running pod,
+        # gives a nice development environment where there are
+        # 2 stages for achieving a restart.
+        # stage 1 is skaffold watching the file and loading them
+        # into the running container when you save them and
+        # stage 2 when nodemon detects that new file and restarts
+        # the process
       sync:
         manual:
           - src: "src/**/*.js"
