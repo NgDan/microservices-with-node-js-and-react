@@ -31,7 +31,7 @@ build:
           - src: "src/**/*.js"
             dest: .
     - image: negrusadan95/microservices-comments
-      context: client
+      context: comments
       docker:
         dockerfile: Dockerfile
       sync:
@@ -39,7 +39,7 @@ build:
           - src: "*.js"
             dest: .
     - image: negrusadan95/microservices-moderation
-      context: client
+      context: moderation
       docker:
         dockerfile: Dockerfile
       sync:
@@ -47,7 +47,7 @@ build:
           - src: "*.js"
             dest: .
     - image: negrusadan95/microservices-query
-      context: client
+      context: query
       docker:
         dockerfile: Dockerfile
       sync:
@@ -55,7 +55,7 @@ build:
           - src: "*.js"
             dest: .
     - image: negrusadan95/microservices-posts
-      context: client
+      context: posts
       docker:
         dockerfile: Dockerfile
       sync:
@@ -63,7 +63,7 @@ build:
           - src: "*.js"
             dest: .
     - image: negrusadan95/microservices-event-bus
-      context: client
+      context: event-bus
       docker:
         dockerfile: Dockerfile
       sync:
